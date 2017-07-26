@@ -1,6 +1,8 @@
 # Banovo Coding Standards
 A coding standard to check against the Banovo php coding standards, originally shamelessly copied from the [djoos/Symfony-coding-standard](https://github.com/djoos/Symfony-coding-standard) repository.
 
+[![Build Status](https://travis-ci.org/banovo/coding-standards.svg?branch=master)](https://travis-ci.org/banovo/coding-standards)
+
 ## Installation
 
 ### Composer
