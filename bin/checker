@@ -55,6 +55,13 @@ function success {
     echo -e "${GREEN}$1${NC}"
 }
 
+function failure {
+    echo
+    echo -e "${RED}$1${NC}"
+}
+
+let "ERROR_COUNT=0"
+
 ###
 # PHP checks
 ###
@@ -85,27 +92,36 @@ if [ -z "$FILES_PHP" ];
 then
     skip "Skipping php check: no php file was changed"
 else
-    command "Syntax check, Mess Detector"
+    command "Syntax check"
     for f in $FILES_PHP
     do
         php -l $f 1> /dev/null
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
+    done
+
+    command "Mess Detector"
+    for f in $FILES_PHP
+    do
         bin/phpmd $f text $DIR/rulesets/pmd.xml
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
 
     command "Coding Standards Fixer"
     bin/php-cs-fixer fix --config=$DIR/rulesets/.php_cs.dist --stop-on-violation --show-progress=none --using-cache=no --path-mode=intersection -- $FILES_PHP
+    [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     command "Code Beautifier and Fixer"
     bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/phpcs.xml
+    [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     command "Coding Standards"
     bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/phpcs.xml
+    [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     command "Copy/Paste Detector"
     bin/phpcpd $FILES_PHP_FILTERED
+    [ $? -ne 0 ] && let "ERROR_COUNT++"
 fi
-
-echo
 
 ###
 # Javascript checks
@@ -121,13 +137,23 @@ else
     then
         command "Syntax and automatically fix problems"
         node_modules/.bin/eslint $FILES_JS --ext js,vue --fix
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
     else
         command "Syntax"
         node_modules/.bin/eslint $FILES_JS --ext js,vue
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
     fi
 
     command "Unit Tests"
     node_modules/.bin/karma start app/karma.conf.js.dist --single-run
+    [ $? -ne 0 ] && let "ERROR_COUNT++"
+fi
+
+if [ $ERROR_COUNT -ne 0 ] ;
+then
+    failure "Checking failed. Found $ERROR_COUNT errors"
+    exit 1
 fi
 
 success "Checking completed"
+exit 0
