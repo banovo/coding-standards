@@ -18,7 +18,7 @@
 TYPE="$1"
 FIX="$2"
 
-DIR="$(pwd)/vendor/banovo/coding-standard/"
+DIR="$(pwd)/vendor/banovo/coding-standard"
 
 ###
 # Setup colors
@@ -69,20 +69,20 @@ let "ERROR_COUNT=0"
 case "$TYPE" in
     all)
 
-        FILES_ALL=$(git ls-files)
+        FILES_ALL=$(git ls-files | grep -e '^src' | grep -v 'lib' | grep -v 'vendor')
         ;;
-    diff)
-        FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/dev)
+    staged)
+        FILES_ALL=$(git diff origin/dev...HEAD --diff-filter=ACM --name-only)
         ;;
     *)
-        FILES_ALL=$(git diff origin/dev...HEAD --diff-filter=ACM --name-only)
+        FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/dev)
         ;;
 esac
 
 section "CHANGES"
 printf ' - %s\n' $FILES_ALL
 
-FILES_PHP=$(printf '%s\n' $FILES_ALL | grep '\.php')
+FILES_PHP=$(printf '%s\n' $FILES_ALL | grep '\.php$')
 FILES_PHP_FILTERED=$(printf '%s\n' $FILES_PHP | grep -v 'Migrations' | grep -v 'Tests')
 FILES_JS=$(printf '%s\n' $FILES_ALL | grep -e '\.js$' -e '\.vue$' -e '\.twig$' -e '\.html$')
 
@@ -99,20 +99,16 @@ else
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
 
-    command "Mess Detector"
-    for f in $FILES_PHP
-    do
-        bin/phpmd $f text $DIR/rulesets/pmd.xml
+    if [ "$FIX" == "fix" ];
+    then
+        command "Coding Standards Fixer"
+        bin/php-cs-fixer fix --config=$DIR/rulesets/.php_cs.dist --stop-on-violation --show-progress=none --using-cache=no --path-mode=intersection -- $FILES_PHP
         [ $? -ne 0 ] && let "ERROR_COUNT++"
-    done
 
-    command "Coding Standards Fixer"
-    bin/php-cs-fixer fix --config=$DIR/rulesets/.php_cs.dist --stop-on-violation --show-progress=none --using-cache=no --path-mode=intersection -- $FILES_PHP
-    [ $? -ne 0 ] && let "ERROR_COUNT++"
-
-    command "Code Beautifier and Fixer"
-    bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/phpcs.xml
-    [ $? -ne 0 ] && let "ERROR_COUNT++"
+        command "Code Beautifier and Fixer"
+        bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/phpcs.xml
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
+    fi
 
     command "Coding Standards"
     bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/phpcs.xml
@@ -121,6 +117,13 @@ else
     command "Copy/Paste Detector"
     bin/phpcpd $FILES_PHP_FILTERED
     [ $? -ne 0 ] && let "ERROR_COUNT++"
+
+    command "Mess Detector"
+    for f in $FILES_PHP
+    do
+        bin/phpmd $f text $DIR/rulesets/pmd.xml
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
+    done
 fi
 
 ###
