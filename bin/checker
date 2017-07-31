@@ -18,7 +18,7 @@
 TYPE="$1"
 FIX="$2"
 
-DIR="$( cd "$( dirname $( dirname "${BASH_SOURCE[0]}" ) )" && pwd )"
+DIR="$(pwd)/vendor/banovo/coding-standard/"
 
 ###
 # Setup colors
