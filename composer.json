@@ -7,7 +7,12 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "squizlabs/php_codesniffer": "~2.0",
-        "escapestudios/symfony2-coding-standard": "2.11.0"
-    }
+        "escapestudios/symfony2-coding-standard": "3.x-dev#927d89a0dda91ea252b88176c721a551b3a4ae40",
+        "sebastian/phpcpd": "2.0.0",
+        "phpmd/phpmd": "~2.6",
+        "friendsofphp/php-cs-fixer": "^2.1"
+    },
+    "bin": [
+        "bin/checker"
+    ]
 }
