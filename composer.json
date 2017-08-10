@@ -10,7 +10,6 @@
         "escapestudios/symfony2-coding-standard": "3.x-dev#927d89a0dda91ea252b88176c721a551b3a4ae40",
         "phpro/grumphp": "^0.11.6",
         "doctrine/orm": "^2.5",
-        "friendsofphp/php-cs-fixer": "^1.12",
         "sebastian/phpcpd": "^3.0",
         "squizlabs/php_codesniffer": "^3.0",
         "codeception/codeception": "^2.3",
