@@ -1,0 +1,19 @@
+# Symfony example config
+
+paths:
+  - ./src
+exclude_files:
+  - .*test.*
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
+  - name: Entity
+    collectors:
+      - type: className
+        regex: .*Entity.*
+ruleset:
+  Controller:
+    - Entity
+  Entity: ~

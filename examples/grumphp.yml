@@ -1,0 +1,58 @@
+# When you install banovo/codingstandards globally,
+# you should set the paths to the global composer
+# installation dir.
+# It's typically under: ~/.composer/vendor/...
+ 
+parameters:
+    ignore_unstaged_changes: false
+    ascii:
+        failed: ~
+        succeeded: ~
+    tasks:
+        composer: ~
+        deptrac: ~
+        file_size: ~
+        git_blacklist:
+            keywords:
+              - "die("
+              - "var_dump("
+              - "exit;"
+              - "exec("
+              - "shell_exec("
+              - "`"
+              - "print_r("
+              - "dump("
+            triggered_by: [php]
+            regexp_type: G
+        git_branch_name: ~
+        git_commit_message: ~
+        jsonlint: ~
+        phpcpd:
+            directory: src
+            exclude:
+              - Tests
+              - Migrations
+        phpcs:
+            standard: ~/.composer/vendor/banovo/coding-standard/rulesets/phpcs.xml
+        phpcsfixer2:
+            allow_risky: true
+            config: ~/.composer/vendor/banovo/coding-standard/rulesets/.php_cs.dist
+            using_cache: false
+        phplint: ~
+        phpmd:
+            ruleset:
+              - ~/.composer/vendor/banovo/coding-standard/rulesets/pmd.xml
+        phpstan: ~
+        securitychecker: ~
+        xmllint: ~
+        yamllint: ~
+        eslint: ~
+services:
+  task.eslint:
+    class: Stickee\GrumPHP\ESLint
+    arguments:
+      - '@config'
+      - '@process_builder'
+      - '@formatter.raw_process'
+    tags:
+      - {name: grumphp.task, config: eslint}
