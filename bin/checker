@@ -146,10 +146,6 @@ else
         node_modules/.bin/eslint $FILES_JS --ext js,vue
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     fi
-
-    command "Unit Tests"
-    node_modules/.bin/karma start app/karma.conf.js.dist --single-run
-    [ $? -ne 0 ] && let "ERROR_COUNT++"
 fi
 
 if [ $ERROR_COUNT -ne 0 ] ;
