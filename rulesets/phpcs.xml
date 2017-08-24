@@ -31,7 +31,6 @@
             <property name="ignoreBlankLines" value="false"/>
         </properties>
     </rule>
-    <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
         <type>error</type>
     </rule>
