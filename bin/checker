@@ -2,17 +2,17 @@
 
 ###
 # Usage:
-#   Check diff with dev branch
-#   app/tools/check.sh
+#   Check diff with master branch
+#   bin/checker
 #
-#   Check diff and uncommitted files
-#   app/tools/check.sh diff
+#   Check diff only of the staged files with master branch
+#   bin/checker staged
 #
 #   Check all project files
-#   app/tools/check.sh all
+#   bin/checker all
 #
 #   Check all project files and fix
-#   app/tools/check.sh - fix
+#   bin/checker - fix
 ###
 
 TYPE="$1"
@@ -72,10 +72,10 @@ case "$TYPE" in
         FILES_ALL=$(git ls-files | grep -e '^src' | grep -v 'lib' | grep -v 'vendor')
         ;;
     staged)
-        FILES_ALL=$(git diff origin/dev...HEAD --diff-filter=ACM --name-only)
+        FILES_ALL=$(git diff origin/master...HEAD --diff-filter=ACM --name-only)
         ;;
     *)
-        FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/dev)
+        FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/master)
         ;;
 esac
 
