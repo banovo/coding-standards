@@ -2,21 +2,25 @@
 
 ###
 # Usage:
-#   Check diff with master branch
-#   bin/checker
+#   bin/checker [branch] [type] [fix]
 #
-#   Check diff only of the staged files with master branch
-#   bin/checker staged
+#   branch:
+#     > master   - use branch origin/master as base for diff
+#       <branch> - use branch origin/<branch> as base for diff
 #
-#   Check all project files
-#   bin/checker all
+#   type:
+#     > diff    - all files in repository
+#       default - diff of all changed files (staged and unstaged)
+#       staged  - diff of only staged files
 #
-#   Check all project files and fix
-#   bin/checker - fix
+#   fix:
+#     > nofix   - no fix
+#       fix     - run fix
 ###
 
-TYPE="$1"
-FIX="$2"
+BRANCH="${1:-master}"
+TYPE="${2:-diff}"
+FIX="${3:-nofix}"
 
 DIR="$(pwd)/vendor/banovo/coding-standard"
 
@@ -72,10 +76,10 @@ case "$TYPE" in
         FILES_ALL=$(git ls-files | grep -e '^src' | grep -v 'lib' | grep -v 'vendor')
         ;;
     staged)
-        FILES_ALL=$(git diff origin/master...HEAD --diff-filter=ACM --name-only)
+        FILES_ALL=$(git diff origin/$BRANCH...HEAD --diff-filter=ACM --name-only)
         ;;
-    *)
-        FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/master)
+    diff)
+        FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/$BRANCH)
         ;;
 esac
 
