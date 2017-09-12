@@ -1,62 +1,57 @@
 # Banovo Coding Standards
-A coding standard to check against the Banovo php coding standards, originally shamelessly copied from the [djoos/Symfony-coding-standard](https://github.com/djoos/Symfony-coding-standard) repository.
 
 [![Build Status](https://travis-ci.org/banovo/coding-standards.svg?branch=master)](https://travis-ci.org/banovo/coding-standards)
 
 ## Installation
 
-### Composer
+Add to `composer.json`:
 
-This standard can be installed with the [Composer](https://getcomposer.org/) dependency manager.
+```json
+"require-dev": {
+    "banovo/coding-standard": "0.1.*"
+},
+"scripts": {
+    "post-install-cmd": [            
+        "echo 'bin/checker' > .git/hooks/pre-commit"
+    ],
+    "post-update-cmd": [
+        "echo 'bin/checker' > .git/hooks/pre-commit"
+    ]
+},
 
-#### 1. [Install Composer](https://getcomposer.org/doc/00-intro.md)
-
-#### 2. Install the coding standard as a dependency of your project
-
-```bash
-composer require --dev escapestudios/symfony2-coding-standard:3.x-dev
 ```
 
-#### 3. Add the coding standard to the PHP_CodeSniffer install path
+Add to `wercker.yml`:
 
-```bash
-vendor/bin/phpcs --config-set installed_paths vendor/escapestudios/symfony2-coding-standard
+```yml
+build:
+    steps:
+        - script:
+            name: Coding Standards and Syntax Check
+            code: bin/checker
 ```
 
-#### 4. Check the installed coding standards for "Symfony"
+## Usage
 
-        vendor/bin/phpcs -i
+Pre-commit hook will execute checker automatically, 
+when you run `git commit`. 
 
-#### 5. Done!
+Execute `bin/checker` manually if you want to change default configuration:
 
-        vendor/bin/phpcs /path/to/code
-
-### Stand-alone
-
-#### 1. Install [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
-
-#### 2. Checkout this repository 
-
-```bash
-git clone git://github.com/djoos/Symfony2-coding-standard.git
 ```
-
-#### 3. Add the coding standard to the PHP_CodeSniffer install path
-
-```php
-phpcs --config-set installed_paths /path/to/Symfony2-coding-standard
-```
-
-Or copy/symlink this repository's "Symfony"-folder inside the phpcs `Standards` directory
-
-#### 4. Check the installed coding standards for "Symfony"
-
-```bash
-phpcs -i
-```
-
-#### 5. Done!
-
-```bash
-phpcs /path/to/code
+# Usage:
+#   bin/checker [branch] [type] [fix]
+#
+#   branch:
+#     > master   - use branch origin/master as base for diff
+#       <branch> - use branch origin/<branch> as base for diff
+#
+#   type:
+#       all     - all files in repository
+#     > diff    - diff of all changed files (staged and unstaged)
+#       staged  - diff of only staged files
+#
+#   fix:
+#     > nofix   - no fix
+#       fix     - run fix
 ```
