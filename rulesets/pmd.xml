@@ -13,7 +13,10 @@
     <rule ref="rulesets/controversial.xml" />
 
     <rule ref="rulesets/codesize.xml">
+        <exclude name="ExcessivePublicCount" />
+        <exclude name="TooManyFields" />
         <exclude name="TooManyMethods" />
+        <exclude name="TooManyPublicMethods" />
         <exclude name="CyclomaticComplexity" />
         <exclude name="ExcessiveParameterList" />
     </rule>
