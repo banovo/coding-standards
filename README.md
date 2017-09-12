@@ -9,7 +9,16 @@ Add to `composer.json`:
 ```json
 "require-dev": {
     "banovo/coding-standard": "0.1.*"
-}
+},
+"scripts": {
+    "post-install-cmd": [            
+        "echo 'bin/checker' > .git/hooks/pre-commit"
+    ],
+    "post-update-cmd": [
+        "echo 'bin/checker' > .git/hooks/pre-commit"
+    ]
+},
+
 ```
 
 Add to `wercker.yml`:
@@ -24,7 +33,10 @@ build:
 
 ## Usage
 
-Execute `bin/checker` locally to see errors
+Pre-commit hook will execute checker automatically, 
+when you run `git commit`. 
+
+Execute `bin/checker` manually if you want to change default configuration:
 
 ```
 # Usage:
