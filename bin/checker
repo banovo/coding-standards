@@ -9,8 +9,8 @@
 #       <branch> - use branch origin/<branch> as base for diff
 #
 #   type:
-#     > diff    - all files in repository
-#       default - diff of all changed files (staged and unstaged)
+#       all     - all files in repository
+#     > diff    - diff of all changed files (staged and unstaged)
 #       staged  - diff of only staged files
 #
 #   fix:
