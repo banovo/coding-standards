@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Banovo">
-    <rule ref="../../../escapestudios/symfony2-coding-standard/Symfony/ruleset.xml"/>
+    <rule ref="./Symfony/ruleset.xml"/>
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="120"/>
