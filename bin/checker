@@ -9,8 +9,8 @@
 #       <branch> - use branch origin/<branch> as base for diff
 #
 #   type:
-#     > diff    - all files in repository
-#       default - diff of all changed files (staged and unstaged)
+#       all     - all files in repository
+#     > diff    - diff of all changed files (staged and unstaged)
 #       staged  - diff of only staged files
 #
 #   fix:
@@ -104,10 +104,6 @@ else
 
     if [ "$FIX" == "fix" ];
     then
-        command "Coding Standards Fixer"
-        bin/php-cs-fixer fix --config=$DIR/rulesets/.php_cs.dist --stop-on-violation --show-progress=none --using-cache=no --path-mode=intersection -- $FILES_PHP
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-
         command "Code Beautifier and Fixer"
         bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/phpcs.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
