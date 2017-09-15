@@ -72,15 +72,21 @@ let "ERROR_COUNT=0"
 
 case "$TYPE" in
     all)
-        FILES_ALL=$(git ls-files | grep -e '^src\|^tests' | grep -v 'lib' | grep -v 'vendor')
+        # list all files in repository
+        FILES_ALL=$(git ls-files)
         ;;
     staged)
+        # list staged files
         FILES_ALL=$(git diff origin/$BRANCH...HEAD --diff-filter=ACM --name-only)
         ;;
     diff)
+        # list changed files
         FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/$BRANCH)
         ;;
 esac
+
+# include only src and tests folder and exclude all paths, which contains lib and vendor
+FILES_ALL=$(printf '%s\n' $FILES_ALL | grep -e '^src\|^tests' | grep -v 'lib' | grep -v 'vendor')
 
 section "CHANGES"
 printf ' - %s\n' $FILES_ALL
