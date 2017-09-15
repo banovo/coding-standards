@@ -72,8 +72,7 @@ let "ERROR_COUNT=0"
 
 case "$TYPE" in
     all)
-
-        FILES_ALL=$(git ls-files | grep -e '^src' | grep -v 'lib' | grep -v 'vendor')
+        FILES_ALL=$(git ls-files | grep -e '^src\|^tests' | grep -v 'lib' | grep -v 'vendor')
         ;;
     staged)
         FILES_ALL=$(git diff origin/$BRANCH...HEAD --diff-filter=ACM --name-only)
