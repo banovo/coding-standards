@@ -43,7 +43,9 @@
     <rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"><priority>1</priority></rule>
 
 
-    <rule ref="rulesets/design.xml" />
+    <rule ref="rulesets/design.xml">
+        <exclude name="CouplingBetweenObjects" />
+    </rule>
 
     <rule ref="rulesets/naming.xml">
         <exclude name="LongVariable" />
