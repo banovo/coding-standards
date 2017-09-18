@@ -50,6 +50,7 @@ Execute `bin/checker` manually if you want to change default configuration:
 #       all     - all files in repository
 #     > diff    - diff of all changed files (staged and unstaged)
 #       staged  - diff of only staged files
+#       <path>  - path to file or folder
 #
 #   fix:
 #     > nofix   - no fix
