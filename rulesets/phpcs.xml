@@ -1,59 +1,25 @@
 <?xml version="1.0"?>
 <ruleset name="Banovo">
-    <rule ref="../../../slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces.NonFullyQualified">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation.NonFullyQualifiedClassName">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Types.EmptyLinesAroundTypeBraces.NoEmptyLineAfterOpeningBrace">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants.NonFullyQualified">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Types.EmptyLinesAroundTypeBraces.NoEmptyLineBeforeClosingBrace">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison.DisallowedYodaComparison">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison.RequiredYodaComparison">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification">
-        <severity>0</severity>
+    <rule ref="../../../slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
+        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces.NonFullyQualified"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions.NonFullyQualified"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation.NonFullyQualifiedClassName"/>
+        <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName"/>
+        <exclude name="SlevomatCodingStandard.Types.EmptyLinesAroundTypeBraces.NoEmptyLineAfterOpeningBrace"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants.NonFullyQualified"/>
+        <exclude name="SlevomatCodingStandard.Types.EmptyLinesAroundTypeBraces.NoEmptyLineBeforeClosingBrace"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse"/>
+        <exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison.DisallowedYodaComparison"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireYodaComparison.RequiredYodaComparison"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment"/>
+        <exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification"/>
     </rule>
     <rule ref="./Symfony/ruleset.xml"/>
     <rule ref="Generic.Files.LineLength">
