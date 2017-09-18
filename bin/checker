@@ -12,6 +12,7 @@
 #       all     - all files in repository
 #     > diff    - diff of all changed files (staged and unstaged)
 #       staged  - diff of only staged files
+#       <path>  - path to file or folder
 #
 #   fix:
 #     > nofix   - no fix
@@ -25,15 +26,16 @@ FIX="${3:-nofix}"
 DIR="$(pwd)/vendor/banovo/coding-standard"
 
 ###
-# Setup colors
+# Setup colors if supported
 ###
-
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[1;34m'
-GRAY='\033[1;30m'
-NC='\033[0m' # No Color
+if test -t 1; then
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    BLUE='\033[1;34m'
+    GRAY='\033[1;30m'
+    NC='\033[0m' # No Color
+fi
 
 ###
 # Define functions
@@ -82,6 +84,9 @@ case "$TYPE" in
     diff)
         # list changed files
         FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/$BRANCH)
+        ;;
+    *)
+        FILES_ALL=$(git ls-files $TYPE)
         ;;
 esac
 
