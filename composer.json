@@ -9,8 +9,7 @@
     "require": {
         "squizlabs/php_codesniffer": "3.*",
         "sebastian/phpcpd": "2.0.0",
-        "phpmd/phpmd": "~2.6",
-        "slevomat/coding-standard": "^4.0"
+        "phpmd/phpmd": "~2.6"
     },
     "bin": [
         "bin/checker"
