@@ -49,6 +49,9 @@
     <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment">
         <severity>0</severity>
     </rule>
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod">
+        <severity>0</severity>
+    </rule>
     <rule ref="./Symfony/ruleset.xml"/>
     <rule ref="Generic.Files.LineLength">
         <properties>
