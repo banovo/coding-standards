@@ -36,26 +36,7 @@ build:
 Pre-commit hook will execute checker automatically,
 when you run `git commit`.
 
-Execute `bin/checker` manually if you want to change default configuration:
-
-```
-# Usage:
-#   bin/checker [branch] [type] [fix]
-#
-#   branch:
-#     > master   - use branch origin/master as base for diff
-#       <branch> - use branch origin/<branch> as base for diff
-#
-#   type:
-#       all     - all files in repository
-#     > diff    - diff of all changed files (staged and unstaged)
-#       staged  - diff of only staged files
-#       <path>  - path to file or folder
-#
-#   fix:
-#     > nofix   - no fix
-#       fix     - run fix
-```
+Execute `bin/checker -h` to see additional configuration.
 
 ## Update
 
