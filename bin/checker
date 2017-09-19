@@ -1,31 +1,6 @@
 #!/bin/bash
 
 ###
-# Usage:
-#   bin/checker [branch] [type] [fix]
-#
-#   branch:
-#     > master   - use branch origin/master as base for diff
-#       <branch> - use branch origin/<branch> as base for diff
-#
-#   type:
-#       all     - all files in repository
-#     > diff    - diff of all changed files (staged and unstaged)
-#       staged  - diff of only staged files
-#       <path>  - path to file or folder
-#
-#   fix:
-#     > nofix   - no fix
-#       fix     - run fix
-###
-
-BRANCH="${1:-master}"
-TYPE="${2:-diff}"
-FIX="${3:-nofix}"
-
-DIR="$(pwd)/vendor/banovo/coding-standard"
-
-###
 # Setup colors if supported
 ###
 if test -t 1; then
@@ -40,6 +15,32 @@ fi
 ###
 # Define functions
 ###
+
+function help {
+    section "USAGE"
+    echo "
+    $(basename "$0") [-b=<branch>] [-t=<type>] [-r=<remote>] [-f] [-h]
+    "
+
+    section "OPTIONS"
+
+    describe "-r=<remote>" "use <remote> for diffs (default: origin)"
+    describe "-b=<branch>" "use branch <remote>/<branch> as base for diff (default: master)"
+    describe "-t=<type>" "change diff type, optional types: all, diff, staged, <path> (default: diff)
+
+                    all     all files in repository
+                    diff    diff of all changed files (staged and unstaged)
+                    staged  diff of only staged files
+                    <path>  path to folder or file
+    "
+
+    describe "-f" "run code beautifier and fixer"
+    describe "-h" "show help"
+}
+
+function describe {
+    echo -e "${YELLOW}$1${NC}\n\t\t${2}\n"
+}
 
 function section {
     echo
@@ -66,6 +67,48 @@ function failure {
     echo -e "${RED}$1${NC}"
 }
 
+for ARGUMENT in "$@"
+do
+    KEY=$(echo $ARGUMENT | cut -f1 -d=)
+    VALUE=$(echo $ARGUMENT | cut -f2 -d=)
+
+    case "$KEY" in
+        -b)
+            BRANCH=$VALUE
+            ;;
+        -t)
+            TYPE=$VALUE
+            ;;
+        -f)
+            FIX="yes"
+            ;;
+        -r)
+            REMOTE=$VALUE
+            ;;
+        -h)
+            help
+            exit 0;
+            ;;
+        *)
+            failure "Invalid argument: $KEY"
+            help
+            exit 1;
+            ;;
+    esac
+done
+
+BRANCH="${BRANCH:-master}"
+TYPE="${TYPE:-diff}"
+FIX="${FIX:-no}"
+REMOTE="${REMOTE:-origin}"
+
+echo "       remote: $REMOTE"
+echo "target branch: $BRANCH"
+echo "         type: $TYPE"
+echo "          fix: $FIX"
+
+DIR="$(pwd)/vendor/banovo/coding-standard"
+
 let "ERROR_COUNT=0"
 
 ###
@@ -79,11 +122,11 @@ case "$TYPE" in
         ;;
     staged)
         # list staged files
-        FILES_ALL=$(git diff origin/$BRANCH...HEAD --diff-filter=ACM --name-only)
+        FILES_ALL=$(git diff $REMOTE/$BRANCH...HEAD --diff-filter=ACM --name-only)
         ;;
     diff)
         # list changed files
-        FILES_ALL=$(git diff --name-only --diff-filter=ACM origin/$BRANCH)
+        FILES_ALL=$(git diff --name-only --diff-filter=ACM $REMOTE/$BRANCH)
         ;;
     *)
         FILES_ALL=$(git ls-files $TYPE)
@@ -92,6 +135,18 @@ esac
 
 # include only src and tests folder and exclude all paths, which contains lib and vendor
 FILES_ALL=$(printf '%s\n' $FILES_ALL | grep -e '^src\|^tests' | grep -v 'lib' | grep -v 'vendor')
+
+REVLIST=$(git log HEAD..$REMOTE/$BRANCH --oneline)
+
+if [ -n "$REVLIST" ];
+then
+    failure "HEAD is not up-to-date with $BRANCH"
+    failure "Missing the following commits:"
+    skip "$REVLIST"
+    echo ""
+    echo "Please update it and run again"
+    exit 1;
+fi
 
 section "CHANGES"
 printf ' - %s\n' $FILES_ALL
@@ -146,7 +201,7 @@ if [ -z "$FILES_JS" ];
 then
     skip "Skipping js check: no js/vue/twig/html file was changed"
 else
-    if [ "$FIX" == "fix" ];
+    if [ "$FIX" == "yes" ];
     then
         command "Syntax and automatically fix problems"
         node_modules/.bin/eslint $FILES_JS --ext js,vue --fix
