@@ -91,7 +91,7 @@ do
             exit 0;
             ;;
         -php)
-            PHP_VERSION=$VALUE;
+            CS_PHP_VERSION=$VALUE;
             ;;
         *)
             failure "Invalid argument: $KEY"
@@ -105,9 +105,9 @@ BRANCH="${BRANCH:-master}"
 TYPE="${TYPE:-diff}"
 FIX="${FIX:-no}"
 REMOTE="${REMOTE:-origin}"
-PHP_VERSION="${PHP_VERSION:-5}"
+CS_PHP_VERSION="${CS_PHP_VERSION:-5}"
 
-echo "  php version: $PHP_VERSION"
+echo "  php version: $CS_PHP_VERSION"
 echo "       remote: $REMOTE"
 echo "target branch: $BRANCH"
 echo "         type: $TYPE"
@@ -177,12 +177,12 @@ else
     if [ "$FIX" == "fix" ];
     then
         command "Code Beautifier and Fixer"
-        bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/php$PHP_VERSION.xml
+        bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     fi
 
     command "Coding Standards"
-    bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$PHP_VERSION.xml
+    bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
     [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     command "Copy/Paste Detector"
