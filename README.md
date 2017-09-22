@@ -40,5 +40,8 @@ Execute `bin/checker -h` to see additional configuration.
 
 ## Update
 
-`rulesets/Symfony` folder is a copy from [Symfony-coding-standard repository](https://github.com/djoos/Symfony-coding-standard).
- Ensure it is up-to-date.
+Ensure it is up-to-date:
+
+* `rulesets/Symfony` folder is a copy from [Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard)
+ 
+* `rulesets/SlevomatCodingStandard` folder is a copy from [Slevomat Coding Standard](https://github.com/slevomat/coding-standard)
