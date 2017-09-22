@@ -19,7 +19,7 @@ fi
 function help {
     section "USAGE"
     echo "
-    $(basename "$0") [-b=<branch>] [-t=<type>] [-r=<remote>] [-f] [-h]
+    $(basename "$0") [-b=<branch>] [-t=<type>] [-r=<remote>] [-f] [-php=<php_version>] [-h]
     "
 
     section "OPTIONS"
@@ -35,6 +35,7 @@ function help {
     "
 
     describe "-f" "run code beautifier and fixer"
+    describe "-php=<php_version>" "use predefined rulesets for php5 or php7, possible values: 5, 7 (default: 5)"
     describe "-h" "show help"
 }
 
@@ -89,6 +90,9 @@ do
             help
             exit 0;
             ;;
+        -php)
+            PHP_VERSION=$VALUE;
+            ;;
         *)
             failure "Invalid argument: $KEY"
             help
@@ -101,7 +105,9 @@ BRANCH="${BRANCH:-master}"
 TYPE="${TYPE:-diff}"
 FIX="${FIX:-no}"
 REMOTE="${REMOTE:-origin}"
+PHP_VERSION="${PHP_VERSION:-5}"
 
+echo "  php version: $PHP_VERSION"
 echo "       remote: $REMOTE"
 echo "target branch: $BRANCH"
 echo "         type: $TYPE"
@@ -171,12 +177,12 @@ else
     if [ "$FIX" == "fix" ];
     then
         command "Code Beautifier and Fixer"
-        bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/phpcs.xml
+        bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/php$PHP_VERSION.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     fi
 
     command "Coding Standards"
-    bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/phpcs.xml
+    bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$PHP_VERSION.xml
     [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     command "Copy/Paste Detector"

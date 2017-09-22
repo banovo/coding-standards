@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset name="Banovo">
+    <rule ref="./Symfony/ruleset.xml"/>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="120"/>
+        </properties>
+        <exclude-pattern>*/Tests/*</exclude-pattern>
+    </rule>
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>*/AppKernel.php</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
+        <type>error</type>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.MemberVarContainsNumbers">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Symfony.Commenting.License">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Symfony.Functions.Arguments">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="false"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+        <type>error</type>
+    </rule>
+</ruleset>
