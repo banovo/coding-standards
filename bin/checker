@@ -159,6 +159,12 @@ printf ' - %s\n' $FILES_ALL
 
 FILES_PHP=$(printf '%s\n' $FILES_ALL | grep '\.php$')
 FILES_PHP_FILTERED=$(printf '%s\n' $FILES_PHP | grep -v 'Migrations' | grep -v 'Tests')
+
+if [ -s .phpcpdignore ]
+then
+    FILES_PHP_FILTERED=$(printf '%s\n' $FILES_PHP_FILTERED | grep -v -f .phpcpdignore)
+fi
+
 FILES_JS=$(printf '%s\n' $FILES_ALL | grep -e '\.js$' -e '\.vue$' -e '\.twig$' -e '\.html$')
 
 section "PHP CHECKS"
