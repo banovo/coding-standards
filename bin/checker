@@ -165,7 +165,7 @@ then
     FILES_PHP_FILTERED=$(printf '%s\n' $FILES_PHP_FILTERED | grep -v -f .phpcpdignore)
 fi
 
-FILES_JS=$(printf '%s\n' $FILES_ALL | grep -e '\.js$' -e '\.vue$' -e '\.twig$' -e '\.html$')
+FILES_JS=$(printf '%s\n' $FILES_ALL | grep -e '\.js$' -e '\.vue$' -e '\.html$')
 
 section "PHP CHECKS"
 
@@ -211,7 +211,7 @@ section "JS CHECKS"
 
 if [ -z "$FILES_JS" ];
 then
-    skip "Skipping js check: no js/vue/twig/html file was changed"
+    skip "Skipping js check: no js/vue/html file was changed"
 else
     if [ "$FIX" == "yes" ];
     then
