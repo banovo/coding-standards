@@ -165,8 +165,6 @@ then
     FILES_PHP_FILTERED=$(printf '%s\n' $FILES_PHP_FILTERED | grep -v -f .phpcpdignore)
 fi
 
-FILES_JS=$(printf '%s\n' $FILES_ALL | grep -e '\.js$' -e '\.vue$' -e '\.html$')
-
 section "PHP CHECKS"
 
 if [ -z "$FILES_PHP" ];
@@ -201,34 +199,6 @@ else
         bin/phpmd $f text $DIR/rulesets/pmd.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
-fi
-
-###
-# Javascript checks
-###
-
-section "JS CHECKS"
-
-if [ -z "$FILES_JS" ];
-then
-    skip "Skipping js check: no js/vue/html file was changed"
-else
-    if [ "$FIX" == "yes" ];
-    then
-        command "Syntax and automatically fix problems"
-        node_modules/.bin/eslint $FILES_JS --ext js,vue --fix
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-    else
-        command "Syntax"
-        node_modules/.bin/eslint $FILES_JS --ext js,vue
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-    fi
-fi
-
-if [ $ERROR_COUNT -ne 0 ] ;
-then
-    failure "Checking failed. Found $ERROR_COUNT errors"
-    exit 1
 fi
 
 success "Checking completed"
