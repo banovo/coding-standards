@@ -140,7 +140,7 @@ case "$TYPE" in
 esac
 
 # include only src and tests folder and exclude all paths, which contains lib and vendor
-#FILES_ALL=$(printf '%s\n' $FILES_ALL | grep -e '^src\|^tests' | grep -v 'lib' | grep -v 'vendor')
+FILES_ALL=$(printf '%s\n' $FILES_ALL | grep -e '^src\|^tests' | grep -v 'lib' | grep -v 'vendor')
 
 REVLIST=$(git log HEAD..$REMOTE/$BRANCH --oneline)
 
