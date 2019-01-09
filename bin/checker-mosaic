@@ -94,7 +94,7 @@ let "ERROR_COUNT=0"
 section "PHP CHECKS"
 
 command "Coding Standards"
-bin/phpcs -s $(pwd)/src --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
+bin/phpcs -s $(pwd)/src $(pwd)/tests --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
 [ $? -ne 0 ] && let "ERROR_COUNT++"
 
 command "Copy/Paste Detector"
