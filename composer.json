@@ -13,6 +13,6 @@
     },
     "bin": [
         "bin/checker",
-        "bin/checker-all"
+        "bin/checker-mosaic"
     ]
 }
