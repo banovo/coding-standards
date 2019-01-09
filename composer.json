@@ -12,6 +12,7 @@
         "phpmd/phpmd": "~2.6"
     },
     "bin": [
-        "bin/checker"
+        "bin/checker",
+        "bin/checker-all"
     ]
 }
