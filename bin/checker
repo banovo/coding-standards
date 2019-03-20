@@ -201,5 +201,11 @@ else
     done
 fi
 
+if [ $ERROR_COUNT -ne 0 ] ;
+then
+    failure "Checking failed. Found $ERROR_COUNT errors"
+    exit 1
+fi
+
 success "Checking completed"
 exit 0
