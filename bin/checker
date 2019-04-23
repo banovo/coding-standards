@@ -150,8 +150,6 @@ then
     failure "Missing the following commits:"
     skip "$REVLIST"
     echo ""
-    echo "Please update it and run again"
-    exit 1;
 fi
 
 section "CHANGES"
