@@ -74,6 +74,9 @@ do
     VALUE=$(echo $ARGUMENT | cut -f2 -d=)
 
     case "$KEY" in
+        -d)
+            DIRS=$VALUE
+            ;;
         -b)
             BRANCH=$VALUE
             ;;
@@ -144,7 +147,7 @@ FILES_ALL=$(printf '%s\n' $FILES_ALL | grep -e '^src\|^tests' | grep -v 'lib' | 
 
 REVLIST=$(git log HEAD..$REMOTE/$BRANCH --oneline)
 
-if [ -n "$REVLIST" ];
+if [ -n "$REVLIST" ] && ([ $TYPE = "staged" ] || [ $TYPE = "diff" ])
 then
     failure "HEAD is not up-to-date with $BRANCH"
     failure "Missing the following commits:"
@@ -152,7 +155,7 @@ then
     echo ""
 fi
 
-section "CHANGES"
+section "FILES"
 printf ' - %s\n' $FILES_ALL
 
 FILES_PHP=$(printf '%s\n' $FILES_ALL | grep '\.php$')
