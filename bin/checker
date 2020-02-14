@@ -187,9 +187,13 @@ else
     bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
     [ $? -ne 0 ] && let "ERROR_COUNT++"
 
-    command "Copy/Paste Detector"
-    bin/phpcpd $FILES_PHP_FILTERED
-    [ $? -ne 0 ] && let "ERROR_COUNT++"
+    if [ -n "$FILES_PHP_FILTERED" ];
+    then
+        command "Copy/Paste Detector"
+        echo "bin/phpcpd $FILES_PHP_FILTERED"
+        bin/phpcpd $FILES_PHP_FILTERED
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
+    fi
 
     command "Mess Detector"
     for f in $FILES_PHP
