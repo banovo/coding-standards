@@ -114,6 +114,7 @@ echo "         type: $TYPE"
 echo "          fix: $FIX"
 
 DIR="$(pwd)/vendor/banovo/coding-standard"
+BINDIR="$(pwd)/vendor/bin"
 
 let "ERROR_COUNT=0"
 
@@ -179,26 +180,26 @@ else
     if [ "$FIX" == "fix" ];
     then
         command "Code Beautifier and Fixer"
-        bin/phpcbf $FILES_PHP --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
+        $BINDIR/phpcbf $FILES_PHP --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     fi
 
     command "Coding Standards"
-    bin/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
+    $BINDIR/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
     [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     if [ -n "$FILES_PHP_FILTERED" ];
     then
         command "Copy/Paste Detector"
         echo "bin/phpcpd $FILES_PHP_FILTERED"
-        bin/phpcpd $FILES_PHP_FILTERED
+        $BINDIR/phpcpd $FILES_PHP_FILTERED
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     fi
 
     command "Mess Detector"
     for f in $FILES_PHP
     do
-        bin/phpmd $f text $DIR/rulesets/pmd.xml
+        $BINDIR/phpmd $f text $DIR/rulesets/pmd.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
 fi
