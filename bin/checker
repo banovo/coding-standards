@@ -114,7 +114,13 @@ echo "         type: $TYPE"
 echo "          fix: $FIX"
 
 DIR="$(pwd)/vendor/banovo/coding-standard"
-BINDIR="$(pwd)/vendor/bin"
+
+if [ -d "$(pwd)/bin" ] 
+then
+    BINDIR="$(pwd)/bin"
+else
+    BINDIR="$(pwd)/vendor/bin"
+fi
 
 let "ERROR_COUNT=0"
 
