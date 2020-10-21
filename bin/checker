@@ -115,7 +115,7 @@ echo "          fix: $FIX"
 
 DIR="$(pwd)/vendor/banovo/coding-standard"
 
-if [ -d "$(pwd)/bin" ] 
+if [ -f "$(pwd)/bin/checker" ]
 then
     BINDIR="$(pwd)/bin"
 else
