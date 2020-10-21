@@ -182,31 +182,25 @@ else
         php -l $f 1> /dev/null
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
-
-    if [ "$FIX" == "fix" ];
-    then
-        command "Code Beautifier and Fixer"
-        $BINDIR/phpcbf $FILES_PHP --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-    fi
+    success "Syntax check completed"
 
     command "Coding Standards"
     $BINDIR/php-cs-fixer fix --config=$DIR/rulesets/.php_cs.dist --dry-run --using-cache=no --verbose --path-mode=intersection -- $FILES_ALL
     [ $? -ne 0 ] && let "ERROR_COUNT++"
+    success "Coding Standards check completed"
 
     if [ -n "$FILES_PHP_FILTERED" ];
     then
         command "Copy/Paste Detector"
         $BINDIR/phpcpd $FILES_PHP_FILTERED
         [ $? -ne 0 ] && let "ERROR_COUNT++"
+        success "Copy/Paste Detector check completed"
     fi
 
     command "Mess Detector"
-    for f in $FILES_PHP
-    do
-        $BINDIR/phpmd $f text $DIR/rulesets/pmd.xml
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-    done
+    $BINDIR/phpmd src ansi $DIR/rulesets/pmd.xml
+    [ $? -ne 0 ] && let "ERROR_COUNT++"
+    success "Mess Detector check completed"
 fi
 
 if [ $ERROR_COUNT -ne 0 ] ;
