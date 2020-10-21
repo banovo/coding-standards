@@ -191,7 +191,7 @@ else
     fi
 
     command "Coding Standards"
-    $BINDIR/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
+    $BINDIR/php-cs-fixer fix --config=$DIR/rulesets/.php_cs.dist --dry-run --using-cache=no --verbose --path-mode=intersection -- $FILES_ALL
     [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     if [ -n "$FILES_PHP_FILTERED" ];
