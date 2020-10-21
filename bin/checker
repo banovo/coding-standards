@@ -198,7 +198,8 @@ else
     fi
 
     command "Mess Detector"
-    $BINDIR/phpmd $FILES_PHP ansi $DIR/rulesets/pmd.xml
+    FILES_PHP_STRING=$(printf -v joined '%s,' "$FILES_PHP")
+    $BINDIR/phpmd $FILES_PHP_STRING ansi $DIR/rulesets/pmd.xml
     [ $? -ne 0 ] && let "ERROR_COUNT++"
     success "Mess Detector check completed"
 fi
