@@ -100,14 +100,16 @@ echo "       remote: $REMOTE"
 echo "target branch: $BRANCH"
 echo "         type: $TYPE"
 
-DIR="$(pwd)/vendor/banovo/coding-standard"
+ROOT="/Users/razbakov/Banovo/Code/coding-standards"
+DIR="$ROOT"
+BINDIR="$ROOT/vendor/bin"
 
-if [ -f "$(pwd)/bin/checker" ]
-then
-    BINDIR="$(pwd)/bin"
-else
-    BINDIR="$(pwd)/vendor/bin"
-fi
+#if [ -f "$(pwd)/bin/checker" ]
+#then
+#    BINDIR="$(pwd)/bin"
+#else
+#    BINDIR="$(pwd)/vendor/bin"
+#fi
 
 let "ERROR_COUNT=0"
 
@@ -172,16 +174,13 @@ else
     success "Syntax check completed"
 
     command "Coding Standards"
-    $BINDIR/php-cs-fixer fix --config=$DIR/rulesets/phpcs.php --dry-run --using-cache=no --verbose --stop-on-violation --path-mode=intersection -- $FILES_ALL
+    $BINDIR/php-cs-fixer fix --config=$DIR/rulesets/phpcs.php --dry-run --using-cache=no --verbose --path-mode=intersection -- $FILES_ALL
     [ $? -ne 0 ] && let "ERROR_COUNT++"
     success "Coding Standards check completed"
 
     command "Mess Detector"
-    for f in $FILES_PHP
-    do
-        $BINDIR/phpmd $f text $DIR/rulesets/pmd.xml
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-    done
+    $BINDIR/phpmd src ansi $DIR/rulesets/pmd.xml
+    [ $? -ne 0 ] && let "ERROR_COUNT++"
     success "Mess Detector check completed"
 
     if [ -n "$FILES_PHP_FILTERED" ];
