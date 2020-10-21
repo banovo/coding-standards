@@ -1,10 +1,8 @@
 <?php
 
 return PhpCsFixer\Config::create()
-    ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony'                   => true,
-        '@Symfony:risky'             => true,
         'binary_operator_spaces'     => ['align_double_arrow' => true],
         'concat_space'               => ['spacing' => 'one'],
         'array_syntax'               => ['syntax' => 'short'],
@@ -29,7 +27,6 @@ return PhpCsFixer\Config::create()
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->exclude('tests/Fixtures')
-            ->in(__DIR__)
+            ->in('.')
     )
 ;
