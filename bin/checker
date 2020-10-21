@@ -26,7 +26,7 @@ function help {
 
     describe "-r=<remote>" "use <remote> for diffs (default: origin)"
     describe "-b=<branch>" "use branch <remote>/<branch> as base for diff (default: master)"
-    describe "-t=<type>" "change diff type, optional types: all, diff, staged, <path> (default: all)
+    describe "-t=<type>" "change diff type, optional types: all, diff, staged, <path> (default: diff)
 
                     all     all files in repository
                     diff    diff of all changed files (staged and unstaged)
@@ -93,7 +93,7 @@ do
 done
 
 BRANCH="${BRANCH:-master}"
-TYPE="${TYPE:-all}"
+TYPE="${TYPE:-diff}"
 REMOTE="${REMOTE:-origin}"
 
 echo "       remote: $REMOTE"
@@ -173,7 +173,7 @@ else
 
 
     command "Coding Standards"
-    $BINDIR/php-cs-fixer fix --dry-run --using-cache=no --verbose --rules=@Symfony src
+    $BINDIR/php-cs-fixer fix --dry-run --using-cache=no --verbose --rules=@Symfony $FILES_ALL
     [ $? -ne 0 ] && let "ERROR_COUNT++"
     success "Coding Standards check completed"
 
