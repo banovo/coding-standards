@@ -26,7 +26,7 @@ function help {
 
     describe "-r=<remote>" "use <remote> for diffs (default: origin)"
     describe "-b=<branch>" "use branch <remote>/<branch> as base for diff (default: master)"
-    describe "-t=<type>" "change diff type, optional types: all, diff, staged, <path> (default: diff)
+    describe "-t=<type>" "change diff type, optional types: all, diff, staged, <path> (default: all)
 
                     all     all files in repository
                     diff    diff of all changed files (staged and unstaged)
@@ -102,7 +102,7 @@ do
 done
 
 BRANCH="${BRANCH:-master}"
-TYPE="${TYPE:-diff}"
+TYPE="${TYPE:-all}"
 FIX="${FIX:-no}"
 REMOTE="${REMOTE:-origin}"
 CS_PHP_VERSION="${CS_PHP_VERSION:-5}"
@@ -115,7 +115,7 @@ echo "          fix: $FIX"
 
 DIR="$(pwd)/vendor/banovo/coding-standard"
 
-if [ -d "$(pwd)/bin" ] 
+if [ -f "$(pwd)/bin/checker" ]
 then
     BINDIR="$(pwd)/bin"
 else
@@ -183,15 +183,8 @@ else
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
 
-    if [ "$FIX" == "fix" ];
-    then
-        command "Code Beautifier and Fixer"
-        $BINDIR/phpcbf $FILES_PHP --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-    fi
-
     command "Coding Standards"
-    $BINDIR/phpcs $FILES_PHP -s --standard=$DIR/rulesets/php$CS_PHP_VERSION.xml
+    $BINDIR/php-cs-fixer fix --dry-run --using-cache=no --verbose --rules=@Symfony src
     [ $? -ne 0 ] && let "ERROR_COUNT++"
 
     command "Mess Detector"
@@ -200,6 +193,13 @@ else
         $BINDIR/phpmd $f text $DIR/rulesets/pmd.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
+
+    if [ -n "$FILES_PHP_FILTERED" ];
+    then
+        command "Copy/Paste Detector"
+        $BINDIR/phpcpd $FILES_PHP_FILTERED
+        [ $? -ne 0 ] && let "ERROR_COUNT++"
+    fi
 fi
 
 if [ $ERROR_COUNT -ne 0 ] ;
