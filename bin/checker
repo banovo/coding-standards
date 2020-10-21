@@ -100,16 +100,14 @@ echo "       remote: $REMOTE"
 echo "target branch: $BRANCH"
 echo "         type: $TYPE"
 
-ROOT="/Users/razbakov/Banovo/Code/coding-standards"
-DIR="$ROOT"
-BINDIR="$ROOT/vendor/bin"
+DIR="$(pwd)/vendor/banovo/coding-standards"
 
-#if [ -f "$(pwd)/bin/checker" ]
-#then
-#    BINDIR="$(pwd)/bin"
-#else
-#    BINDIR="$(pwd)/vendor/bin"
-#fi
+if [ -f "$(pwd)/bin/checker" ]
+then
+    BINDIR="$(pwd)/bin"
+else
+    BINDIR="$(pwd)/vendor/bin"
+fi
 
 let "ERROR_COUNT=0"
 
