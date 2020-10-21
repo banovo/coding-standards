@@ -21,14 +21,9 @@ Add to `composer.json`:
 
 ```
 
-Add to `wercker.yml`:
-
-```yml
-build:
-    steps:
-        - script:
-            name: Coding Standards and Syntax Check
-            code: bin/checker
+Add pre-commit hook
+```
+echo './vendor/bin/php-cs-fixer fix --config=./vendor/banovo/coding-standard/rulesets/.php_cs.dist src && git add .' > .git/hooks/pre-commit
 ```
 
 ## Usage
