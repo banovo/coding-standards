@@ -173,7 +173,7 @@ else
 
 
     command "Coding Standards"
-    $BINDIR/php-cs-fixer fix --dry-run --using-cache=no --verbose --rules=@Symfony --path-mode=intersection $FILES_ALL
+    $BINDIR/php-cs-fixer fix --dry-run --using-cache=no --verbose --rules=@Symfony --stop-on-violation --path-mode=intersection -- $FILES_ALL
     [ $? -ne 0 ] && let "ERROR_COUNT++"
     success "Coding Standards check completed"
 
