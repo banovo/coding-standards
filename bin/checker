@@ -19,7 +19,7 @@ fi
 function help {
     section "USAGE"
     echo "
-    $(basename "$0") [-b=<branch>] [-t=<type>] [-r=<remote>] [-f] [-php=<php_version>] [-h]
+    $(basename "$0") [-b=<branch>] [-t=<type>] [-r=<remote>] [-h]
     "
 
     section "OPTIONS"
@@ -33,9 +33,6 @@ function help {
                     staged  diff of only staged files
                     <path>  path to folder or file
     "
-
-    describe "-f" "run code beautifier and fixer"
-    describe "-php=<php_version>" "use predefined rulesets for php5 or php7, possible values: 5, 7 (default: 5)"
     describe "-h" "show help"
 }
 
@@ -80,18 +77,12 @@ do
         -t)
             TYPE=$VALUE
             ;;
-        -f)
-            FIX="yes"
-            ;;
         -r)
             REMOTE=$VALUE
             ;;
         -h)
             help
             exit 0;
-            ;;
-        -php)
-            CS_PHP_VERSION=$VALUE;
             ;;
         *)
             failure "Invalid argument: $KEY"
@@ -103,15 +94,11 @@ done
 
 BRANCH="${BRANCH:-master}"
 TYPE="${TYPE:-all}"
-FIX="${FIX:-no}"
 REMOTE="${REMOTE:-origin}"
-CS_PHP_VERSION="${CS_PHP_VERSION:-5}"
 
-echo "  php version: $CS_PHP_VERSION"
 echo "       remote: $REMOTE"
 echo "target branch: $BRANCH"
 echo "         type: $TYPE"
-echo "          fix: $FIX"
 
 DIR="$(pwd)/vendor/banovo/coding-standard"
 
