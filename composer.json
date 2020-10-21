@@ -1,19 +1,17 @@
 {
     "name": "banovo/coding-standard",
     "type": "phpcodesniffer-standard",
-    "description": "CodeSniffer ruleset for the Banovo PHP coding standard",
-    "keywords": ["Banovo", "coding standard", "phpcs"],
-    "homepage": "https://github.com/banovo/coding-standard",
+    "description": "Banovo PHP code style checker for CI",
+    "keywords": ["Banovo", "coding standard", "phpcs", "ci"],
+    "homepage": "https://github.com/banovo/coding-standards",
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "squizlabs/php_codesniffer": "3.*",
-        "sebastian/phpcpd": "2.0.0",
-        "phpmd/phpmd": "~2.6",
-        "friendsofphp/php-cs-fixer": "^2.17@dev"
+        "sebastian/phpcpd": "6.0.2",
+        "phpmd/phpmd": "2.9.1",
+        "friendsofphp/php-cs-fixer": "2.15.8"
     },
     "bin": [
-        "bin/checker",
-        "bin/checker-mosaic"
+        "bin/checker"
     ]
 }

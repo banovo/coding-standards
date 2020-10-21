@@ -184,7 +184,7 @@ else
     if [ -n "$FILES_PHP_FILTERED" ];
     then
         command "Copy/Paste Detector"
-        $BINDIR/phpcpd $FILES_PHP_FILTERED
+        $BINDIR/phpcpd --fuzzy $FILES_PHP_FILTERED
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     fi
 fi
