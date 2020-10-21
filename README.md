@@ -21,15 +21,6 @@ Add to `composer.json`:
 
 ```
 
-Add to `wercker.yml`:
-
-```yml
-build:
-    steps:
-        - script:
-            name: Coding Standards and Syntax Check
-            code: bin/checker
-```
 
 ## Usage
 
