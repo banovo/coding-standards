@@ -169,10 +169,13 @@ else
         php -l $f 1> /dev/null
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
+    success "Syntax check completed"
+
 
     command "Coding Standards"
     $BINDIR/php-cs-fixer fix --dry-run --using-cache=no --verbose --rules=@Symfony src
     [ $? -ne 0 ] && let "ERROR_COUNT++"
+    success "Coding Standards check completed"
 
     command "Mess Detector"
     for f in $FILES_PHP
@@ -180,12 +183,14 @@ else
         $BINDIR/phpmd $f text $DIR/rulesets/pmd.xml
         [ $? -ne 0 ] && let "ERROR_COUNT++"
     done
+    success "Mess Detector check completed"
 
     if [ -n "$FILES_PHP_FILTERED" ];
     then
         command "Copy/Paste Detector"
         $BINDIR/phpcpd --fuzzy $FILES_PHP_FILTERED
         [ $? -ne 0 ] && let "ERROR_COUNT++"
+        success "Copy/Paste Detector check completed"
     fi
 fi
 
