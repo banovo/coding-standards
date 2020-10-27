@@ -5,10 +5,9 @@
     "keywords": ["Banovo", "coding standard", "phpcs"],
     "homepage": "https://github.com/banovo/coding-standard",
     "license": "MIT",
-    "minimum-stability": "dev",
     "require": {
         "squizlabs/php_codesniffer": "3.*",
-        "sebastian/phpcpd": "6.0.2",
+        "sebastian/phpcpd": "^6.0",
         "phpmd/phpmd": "2.9.1",
         "friendsofphp/php-cs-fixer": "2.15.8"
     },
