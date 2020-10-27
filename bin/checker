@@ -189,14 +189,6 @@ else
     [ $? -ne 0 ] && let "ERROR_COUNT++"
     success "Coding Standards check completed"
 
-    if [ -n "$FILES_PHP_FILTERED" ];
-    then
-        command "Copy/Paste Detector"
-        $BINDIR/phpcpd $FILES_PHP_FILTERED
-        [ $? -ne 0 ] && let "ERROR_COUNT++"
-        success "Copy/Paste Detector check completed"
-    fi
-
     command "Mess Detector"
     for f in $FILES_PHP
     do
